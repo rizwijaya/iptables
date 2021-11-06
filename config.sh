@@ -18,34 +18,28 @@ PTR_RECORD="$ENIESLOBBY_IP_REV.in-addr.arpa"
 
 # Router
 function Foosha {
-    iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE -s 192.214.0.0/16
     apt update
 }
 
 # Server
 function EniesLobby {
-    echo nameserver 192.168.122.1 > /etc/resolv.conf
 	apt update
 }
 
 function Water7 {
-    echo nameserver 192.168.122.1 > /etc/resolv.conf
     apt update
 }
 
 # Client
 function Loguetown {
-    echo nameserver 192.168.122.1 > /etc/resolv.conf
 	apt update
 }
 
 function Alabasta {
-    echo nameserver 192.168.122.1 > /etc/resolv.conf
 	apt update
 }
 
 function Jipangu {
-    echo nameserver 192.168.122.1 > /etc/resolv.conf
 	apt update
 }
 function host-is { [[ $HOSTNAME = "$1" ]] && return 0 || return 1; }
