@@ -19,15 +19,18 @@ PTR_RECORD="$ENIESLOBBY_IP_REV.in-addr.arpa"
 # Router
 function Foosha {
     apt update
+    apt-get install isc-dhcp-server
 }
 
 # Server
 function EniesLobby {
 	apt update
+    apt-get install bind9
 }
 
 function Water7 {
     apt update
+    apt-get install squid
 }
 
 # Client
