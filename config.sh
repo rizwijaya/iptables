@@ -20,6 +20,19 @@ PTR_RECORD="$ENIESLOBBY_IP_REV.in-addr.arpa"
 function Foosha {
     apt update
     apt-get install isc-dhcp-server -y
+
+    sed -i "s/INTERFACES=\"\"/INTERFACES=\"eth1\"" "/etc/default/isc-dhcp-server"
+    echo "subnet 192.214.1.0 netmask 255.255.255.0 {
+    range 192.214.1.7 192.214.1.30;
+    option routers 192.214.1.1;
+    option broadcast-address 192.214.1.255;
+    option domain-name-servers 202.46.129.2;
+    default-lease-time 600;
+    max-lease-time 7200;
+}
+" >> /etc/dhcp/dhcpd.conf
+
+    service isc-dhcp-server restart
 }
 
 # Server
@@ -40,6 +53,16 @@ function Loguetown {
 
 function Alabasta {
 	apt update
+#     rm /etc/network/interfaces
+#     echo "#auto eth0
+# #iface eth0 inet static
+# #       address 192.214.1.3
+# #       netmask 255.255.255.0
+# #       gateway 192.214.1.1
+
+# auto eth0
+# iface eth0 inet dhcp
+# " >> /etc/network/interfaces
 }
 
 function Jipangu {
