@@ -7,9 +7,13 @@ PREFIX="192.214"
 DNS="192.168.122.1"
 ENIESLOBBY_IP="$PREFIX.2.2"
 WATER7_IP="$PREFIX.2.3"
+
 LOGUETOWN_IP="$PREFIX.1.2"
 ALABASTA_IP="$PREFIX.1.3"
 JIPANGU_IP="$PREFIX.1.4"
+
+TOTTOLAND_IP="$PREFIX.3.2"
+SKYPIE_IP="$PREFIX.3.3"
 
 FOOSHA_e1_IP="$PREFIX.1.1"
 FOOSHA_e2_IP="$PREFIX.2.1"
@@ -19,55 +23,42 @@ PTR_RECORD="$ENIESLOBBY_IP_REV.in-addr.arpa"
 # Router
 function Foosha {
     apt update
-    apt-get install isc-dhcp-server -y
-
-    sed -i "s/INTERFACES=\"\"/INTERFACES=\"eth1\"" "/etc/default/isc-dhcp-server"
-    echo "subnet 192.214.1.0 netmask 255.255.255.0 {
-    range 192.214.1.7 192.214.1.30;
-    option routers 192.214.1.1;
-    option broadcast-address 192.214.1.255;
-    option domain-name-servers 202.46.129.2;
-    default-lease-time 600;
-    max-lease-time 7200;
-}
-" >> /etc/dhcp/dhcpd.conf
-
-    service isc-dhcp-server restart
+    apt-get install isc-dhcp-relay -y
 }
 
 # Server
 function EniesLobby {
 	apt update
-    apt-get install bind9 -y
 }
 
 function Water7 {
     apt update
-    apt-get install squid -y
 }
 
-# Client
+function Jipangu {
+	apt update
+    apt-get install isc-dhcp-server -y
+    sed -i -e 's/INTERFACES=""/g' -e 's/INTERFACES="eth0"/g' /etc/default/isc-dhcp-server
+}
+
+# Client Switch 1
 function Loguetown {
 	apt update
 }
 
 function Alabasta {
 	apt update
-#     rm /etc/network/interfaces
-#     echo "#auto eth0
-# #iface eth0 inet static
-# #       address 192.214.1.3
-# #       netmask 255.255.255.0
-# #       gateway 192.214.1.1
-
-# auto eth0
-# iface eth0 inet dhcp
-# " >> /etc/network/interfaces
 }
 
-function Jipangu {
+# Client Switch 2
+function TottoLand {
 	apt update
 }
+
+function Skypie {
+	apt update
+}
+
 function host-is { [[ $HOSTNAME = "$1" ]] && return 0 || return 1; }
 
 function update {
@@ -86,4 +77,8 @@ elif host-is Loguetown; then
 	Loguetown
 elif host-is Alabasta; then
 	Alabasta
+elif host-is TottoLand; then
+	TottoLand
+elif host-is Skypie; then
+	Skypie
 fi
